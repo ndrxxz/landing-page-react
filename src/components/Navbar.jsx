@@ -1,11 +1,30 @@
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
-export default function Navbar() {
+const navLinks = [
+    {
+        name: "Features",
+        href: "#features"
+    },
+    {
+        name: "Pricing",
+        href: "#pricing"
+    },
+    {
+        name: "Testimonials",
+        href: "#testimonials"
+    }
+]
+
+export default function Navbar({ scrolled }) {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
 
     return (
-        <nav className="fixed top-0 w-full z-50 transition-all duration-300 bg-slate-950/20 backdrop-blur-sm">
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 
+            ${scrolled 
+                ? "bg-slate-950/80 backdrop-blur-lg border-b border-slate-800" 
+                : "bg-slate-950/20 backdrop-blur-sm"}
+            `}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-14 sm:h-16 md:h-20">
                     <div className="flex items-center space-x-1 group cursor-pointer">
@@ -24,24 +43,15 @@ export default function Navbar() {
 
                     {/* Nav Links */}
                     <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-                        <a 
-                            href="#features" 
-                            className="text-gray-300 hover:text-white text-sm lg:text-base"
-                        >
-                            Features
-                        </a>
-                        <a 
-                            href="#features" 
-                            className="text-gray-300 hover:text-white text-sm lg:text-base"
-                        >
-                            Pricing
-                        </a>
-                        <a 
-                            href="#features" 
-                            className="text-gray-300 hover:text-white text-sm lg:text-base"
-                        >
-                            Testimonials
-                        </a>
+                        {navLinks.map((link, key) => (
+                            <a 
+                                key={key}
+                                href={link.href} 
+                                className="text-gray-300 hover:text-white text-sm lg:text-base"
+                            >
+                                {link.name}
+                            </a>
+                        ))}
                     </div>
 
                     <button 
@@ -60,27 +70,16 @@ export default function Navbar() {
             {mobileMenuIsOpen && (
                 <div className="md:hidden bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 animate-in slide-in-from-top duration-300">
                     <div className="flex flex-col space-y-3 sm:space-y-4 px-4 py-4 sm:py-6">
-                        <a 
-                            href="#features" 
-                            onClick={() => setMobileMenuIsOpen(false)}
-                            className="text-gray-300 hover:text-white text-sm lg:text-base"
-                        >
-                            Features
-                        </a>
-                        <a 
-                            href="#pricing" 
-                            onClick={() => setMobileMenuIsOpen(false)}
-                            className="text-gray-300 hover:text-white text-sm lg:text-base"
-                        >
-                            Pricing
-                        </a>
-                        <a 
-                            href="#testimonials" 
-                            onClick={() => setMobileMenuIsOpen(false)}
-                            className="text-gray-300 hover:text-white text-sm lg:text-base"
-                        >
-                            Testimonials
-                        </a>
+                        {navLinks.map((link, key) => (
+                            <a 
+                                key={key}
+                                href={link.href} 
+                                onClick={() => setMobileMenuIsOpen(false)}
+                                className="text-gray-300 hover:text-white text-sm lg:text-base"
+                            >
+                                {link.name}
+                            </a>
+                        ))}
                     </div>
                 </div>
             )}
